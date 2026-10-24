@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PH Tube - Chặn Quảng Cáo Cực Mạnh</title>
+  <title>PH Tube - Trang Chủ YouTube Trending No-Ads</title>
   <style>
     :root {
-      --bg-color: #0d0d0d;
-      --card-bg: #1a1a1a;
+      --bg-color: #0f0f0f;
+      --card-bg: #181818;
       --accent-color: #DB5304;
       --accent-hover: #ff6a1a;
       --text-color: #ffffff;
       --text-dim: #aaaaaa;
-      --border-color: #2a2a2a;
+      --border-color: #272727;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
       display: flex; flex-direction: column; min-height: 100vh;
@@ -51,41 +51,40 @@
 
     main { display: flex; flex-direction: column; padding: 20px; max-width: 1400px; margin: 0 auto; width: 100%; gap: 20px; }
 
-    .server-switcher {
-      display: flex; align-items: center; justify-content: space-between;
-      background: var(--card-bg); padding: 10px 16px; border-radius: 8px; border: 1px solid var(--border-color);
-    }
-    .server-btn {
-      padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border-color);
-      background: #252525; color: #fff; cursor: pointer; font-size: 0.85rem;
-    }
-    .server-btn.active { background: var(--accent-color); border-color: var(--accent-color); font-weight: bold; }
-
+    /* Player Area */
     .player-section {
       width: 100%; background-color: #000; border-radius: 12px; overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5); border: 1px solid var(--border-color);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6); border: 1px solid var(--border-color);
     }
-
-    .video-container {
-      position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000;
-    }
+    .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-
-    .video-info { padding: 16px 20px; }
+    .video-info { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
     .video-title { font-size: 1.2rem; font-weight: 600; color: #fff; }
 
-    .section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; color: var(--accent-color); }
+    /* Category Tabs */
+    .category-tabs {
+      display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; border-bottom: 1px solid var(--border-color);
+    }
+    .tab-btn {
+      padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border-color);
+      background-color: var(--card-bg); color: #fff; font-size: 0.9rem; cursor: pointer; white-space: nowrap; transition: 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background-color: var(--accent-color); border-color: var(--accent-color); font-weight: bold;
+    }
 
-    .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+    /* Video Grid Home */
+    .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
     .video-card {
-      background-color: var(--card-bg); border-radius: 10px; overflow: hidden;
-      border: 1px solid var(--border-color); cursor: pointer; transition: transform 0.2s;
+      background-color: var(--card-bg); border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border-color); cursor: pointer; transition: transform 0.2s, border-color 0.2s;
+      display: flex; flex-direction: column;
     }
     .video-card:hover { transform: translateY(-4px); border-color: var(--accent-color); }
     .thumbnail-box { position: relative; width: 100%; padding-top: 56.25%; background: #222; }
     .thumbnail-box img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
-    .card-info { padding: 12px; display: flex; flex-direction: column; gap: 6px; }
-    .card-title { font-size: 0.9rem; font-weight: 600; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-info { padding: 12px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+    .card-title { font-size: 0.92rem; font-weight: 600; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .card-channel { font-size: 0.8rem; color: var(--text-dim); }
 
     footer { text-align: center; padding: 20px; border-top: 1px solid var(--border-color); color: var(--text-dim); font-size: 0.85rem; }
@@ -94,59 +93,81 @@
 <body>
 
   <header>
-    <div class="logo" onclick="loadVideo('-VBc27cNC7A', 'NHẠC REMIX TIKTOK HAY NHẤT 2026')">
-      <span>▶</span> PH Tube No-Ads
+    <div class="logo" onclick="loadVideo('RHYDER', 'TRONG ĐÔI MẮT THIẾU NỮ - RHYDER')">
+      <span>▶</span> PH Tube Trending
     </div>
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Dán link YouTube hoặc ID video...">
+      <input type="text" id="searchInput" placeholder="Dán link YouTube hoặc nhập tên bài hát...">
       <button onclick="handleSearch()">Xem ngay</button>
     </div>
   </header>
 
   <main>
-    <div class="server-switcher">
-      <span style="font-size:0.9rem; color:#bbb;">Nguồn phát không QC:</span>
-      <div>
-        <button class="server-btn active" id="btnServerPiped" onclick="switchServer('piped')">Server Clean (Piped)</button>
-        <button class="server-btn" id="btnServerYT" onclick="switchServer('youtube')">Server YouTube Gốc</button>
-      </div>
-    </div>
-
+    <!-- Trình phát Video -->
     <div class="player-section">
       <div class="video-container">
-        <iframe id="mainPlayer" src="https://piped.video/embed/-VBc27cNC7A?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope" allowfullscreen></iframe>
+        <iframe id="mainPlayer" src="https://piped.video/embed/RHYDER?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope" allowfullscreen></iframe>
       </div>
       <div class="video-info">
-        <div class="video-title" id="currentTitle">NHẠC REMIX TIKTOK HAY NHẤT 2026 | BXH NHẠC TRẺ REMIX HOT TREND 2026</div>
+        <div class="video-title" id="currentTitle">TRONG ĐÔI MẮT THIẾU NỮ - RHYDER | OFFICIAL MUSIC VIDEO</div>
       </div>
     </div>
 
+    <!-- Thanh Danh Mục Trụ Cột như Home YouTube -->
+    <div class="category-tabs">
+      <button class="tab-btn active" onclick="switchCategory('all', this)">🔥 Tất cả Trending</button>
+      <button class="tab-btn" onclick="switchCategory('music', this)">🎵 Âm Nhạc Hot</button>
+      <button class="tab-btn" onclick="switchCategory('tiktok', this)">⚡ TikTok Remix Trend</button>
+      <button class="tab-btn" onclick="switchCategory('gaming', this)">🎮 Giải Trí & Game</button>
+    </div>
+
+    <!-- Lưới hiển thị danh sách video -->
     <div>
-      <div class="section-title">🎵 Nhạc Trend TikTok Việt Nam 2026</div>
-      <div class="video-grid" id="playlistGrid"></div>
+      <div class="video-grid" id="videoGrid"></div>
     </div>
   </main>
 
   <footer>
-    PH Tube &copy; 2026 - Giải Pháp Xem YouTube Không Quảng Cáo
+    PH Tube &copy; 2026 - YouTube Trending Home
   </footer>
 
   <script>
-    let currentVideoId = "-VBc27cNC7A";
-    let currentMode = "piped"; // 'piped' hoặc 'youtube'
+    // Danh sách Video Trending YouTube VN
+    const trendingDatabase = {
+      all: [
+        { id: "RHYDER", title: "TRONG ĐÔI MẮT THIẾU NỮ - RHYDER | OFFICIAL MUSIC VIDEO", channel: "RHYDER Official" },
+        { id: "-VBc27cNC7A", title: "NHẠC REMIX TIKTOK HAY NHẤT | BXH NHẠC TRẺ REMIX HOT TREND", channel: "DN TEAM" },
+        { id: "t4LbQLsw4bc", title: "NHẠC REMIX TIKTOK TRIỆU VIEW - Top 20 Nhạc Hot TikTok", channel: "Ness Remix" },
+        { id: "IZT7fDdDyR4", title: "Nhạc Trẻ Ballad Hot Trend - Top 20 Ca Khúc Về Nỗi Đau Tình Yêu", channel: "Mộng Mơ Ballad" },
+        { id: "EU9yrv9revU", title: "BXH NHẠC TRẺ REMIX HOT TREND - NHẠC TREND TIKTOK REMIX", channel: "DN TEAM" },
+        { id: "YQ8Ea1y8LB4", title: "NONSTOP DJ THÁI HOÀNG REMIX - BXH NHẠC TRẺ REMIX", channel: "Dolce Music" },
+        { id: "tOUtXMsyui8", title: "HIGHLIGHTS: VIỆT NAM - MALAYSIA | MỸ ĐÌNH MỞ HỘI", channel: "VFF Channel" },
+        { id: "ywEm3F43aS8", title: "HIGHLIGHTS: THÁI LAN - VIỆT NAM | SIÊU PHẨM QUẬT NGÃ VOI CHIẾN", channel: "VFF Channel" }
+      ],
+      music: [
+        { id: "RHYDER", title: "TRONG ĐÔI MẮT THIẾU NỮ - RHYDER | OFFICIAL MUSIC VIDEO", channel: "RHYDER Official" },
+        { id: "IZT7fDdDyR4", title: "Nhạc Trẻ Ballad Hot Trend - Top 20 Ca Khúc Về Nỗi Đau Tình Yêu", channel: "Mộng Mơ Ballad" },
+        { id: "YQ8Ea1y8LB4", title: "NONSTOP DJ THÁI HOÀNG REMIX - BXH NHẠC TRẺ REMIX", channel: "Dolce Music" }
+      ],
+      tiktok: [
+        { id: "-VBc27cNC7A", title: "NHẠC REMIX TIKTOK HAY NHẤT | BXH NHẠC TRẺ REMIX HOT TREND", channel: "DN TEAM" },
+        { id: "t4LbQLsw4bc", title: "NHẠC REMIX TIKTOK TRIỆU VIEW - Top 20 Nhạc Hot TikTok", channel: "Ness Remix" },
+        { id: "EU9yrv9revU", title: "BXH NHẠC TRẺ REMIX HOT TREND - NHẠC TREND TIKTOK REMIX", channel: "DN TEAM" }
+      ],
+      gaming: [
+        { id: "tOUtXMsyui8", title: "HIGHLIGHTS: VIỆT NAM - MALAYSIA | MỸ ĐÌNH MỞ HỘI", channel: "VFF Channel" },
+        { id: "ywEm3F43aS8", title: "HIGHLIGHTS: THÁI LAN - VIỆT NAM | SIÊU PHẨM QUẬT NGÃ VOI CHIẾN", channel: "VFF Channel" }
+      ]
+    };
 
-    const tiktokPlaylist = [
-      { id: "-VBc27cNC7A", title: "NHẠC REMIX TIKTOK HAY NHẤT 2026 | BXH NHẠC TRẺ REMIX HOT TREND 2026", channel: "DN TEAM" },
-      { id: "t4LbQLsw4bc", title: "NHẠC REMIX TIKTOK TRIỆU VIEW - Top 20 Nhạc Hot TikTok 2026", channel: "Ness Remix" },
-      { id: "EU9yrv9revU", title: "BXH NHẠC TRẺ REMIX HOT TREND 2026 | NHẠC TREND TIKTOK", channel: "DN TEAM" },
-      { id: "IZT7fDdDyR4", title: "Nhạc Trẻ Ballad Hot Trend 2026 ♫ Top 20 Ca Khúc Hay Nhất", channel: "Mộng Mơ Ballad" },
-      { id: "YQ8Ea1y8LB4", title: "NHẠC REMIX TIKTOK HAY 2026🔥NONSTOP 2026 DJ THÁI HOÀNG REMIX", channel: "Dolce Music" }
-    ];
+    let currentCategory = "all";
 
-    function renderPlaylist() {
-      const grid = document.getElementById("playlistGrid");
+    function renderGrid(categoryKey) {
+      const grid = document.getElementById("videoGrid");
       grid.innerHTML = "";
-      tiktokPlaylist.forEach(video => {
+      const list = trendingDatabase[categoryKey] || trendingDatabase.all;
+
+      list.forEach(video => {
         const card = document.createElement("div");
         card.className = "video-card";
         card.onclick = () => loadVideo(video.id, video.title);
@@ -163,26 +184,17 @@
       });
     }
 
-    function updatePlayerSrc() {
-      const player = document.getElementById("mainPlayer");
-      if (currentMode === "piped") {
-        player.src = `https://piped.video/embed/${currentVideoId}?autoplay=1`;
-      } else {
-        player.src = `https://www.youtube-nocookie.com/embed/${currentVideoId}?autoplay=1`;
-      }
-    }
-
-    function switchServer(mode) {
-      currentMode = mode;
-      document.getElementById("btnServerPiped").classList.toggle("active", mode === "piped");
-      document.getElementById("btnServerYT").classList.toggle("active", mode === "youtube");
-      updatePlayerSrc();
+    function switchCategory(key, btn) {
+      currentCategory = key;
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderGrid(key);
     }
 
     function loadVideo(id, title) {
-      currentVideoId = id;
-      updatePlayerSrc();
-      document.getElementById("currentTitle").innerText = title || "Video Đã Chọn";
+      const player = document.getElementById("mainPlayer");
+      player.src = `https://piped.video/embed/${id}?autoplay=1`;
+      document.getElementById("currentTitle").innerText = title || "Video Trending";
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -197,7 +209,9 @@
       if (!input) return;
       const videoId = extractVideoId(input);
       if (videoId.length === 11) {
-        loadVideo(videoId, "Video YouTube");
+        loadVideo(videoId, "Video Đã Chọn");
+      } else {
+        window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(input)}`, '_blank');
       }
     }
 
@@ -205,7 +219,7 @@
       if (e.key === "Enter") handleSearch();
     });
 
-    renderPlaylist();
+    renderGrid("all");
   </script>
 </body>
 </html>
