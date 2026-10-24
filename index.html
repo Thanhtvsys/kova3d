@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KOVA3d</title>
+  <title>PH Tube - Xem YouTube Không Quảng Cáo Siêu Tốc</title>
   <style>
     :root {
       --bg-color: #0f0f0f;
@@ -70,20 +70,20 @@
     }
     .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000; }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-    .video-info { padding: 16px 20px; }
+    .video-info { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
     .video-title { font-size: 1.2rem; font-weight: 600; color: #fff; }
 
-    /* Section Header & Refresh */
-    .section-header {
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
-      margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;
+    /* Category Tabs */
+    .category-tabs {
+      display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px; border-bottom: 1px solid var(--border-color);
     }
-    .section-title { font-size: 1.2rem; font-weight: 700; color: var(--accent-color); }
-    .refresh-btn {
-      padding: 6px 14px; border-radius: 20px; border: 1px solid var(--accent-color);
-      background: transparent; color: var(--accent-color); cursor: pointer; font-size: 0.85rem; transition: 0.2s;
+    .tab-btn {
+      padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border-color);
+      background-color: var(--card-bg); color: #fff; font-size: 0.9rem; cursor: pointer; white-space: nowrap; transition: 0.2s;
     }
-    .refresh-btn:hover { background: var(--accent-color); color: #fff; }
+    .tab-btn.active, .tab-btn:hover {
+      background-color: var(--accent-color); border-color: var(--accent-color); font-weight: bold;
+    }
 
     /* Video Grid */
     .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
@@ -99,30 +99,28 @@
     .card-title { font-size: 0.92rem; font-weight: 600; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .card-channel { font-size: 0.8rem; color: var(--text-dim); }
 
-    .loading-msg { text-align: center; padding: 40px; color: var(--text-dim); font-size: 1rem; grid-column: 1 / -1; }
-
     footer { text-align: center; padding: 20px; border-top: 1px solid var(--border-color); color: var(--text-dim); font-size: 0.85rem; }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo" onclick="fetchLiveTrending()">
-      <span>▶</span> PH Tube Realtime
+    <div class="logo" onclick="loadVideo('RHYDER', 'TRONG ĐÔI MẮT THIẾU NỮ - RHYDER')">
+      <span>▶</span> PH Tube No-Ads
     </div>
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Tìm kiếm video hoặc dán link YouTube...">
-      <button onclick="handleSearch()">Tìm kiếm</button>
+      <input type="text" id="searchInput" placeholder="Dán link YouTube hoặc nhập tên bài hát...">
+      <button onclick="handleSearch()">Xem ngay</button>
     </div>
   </header>
 
   <main>
-    <!-- Server Player Control -->
+    <!-- Server Switcher -->
     <div class="server-bar">
-      <span style="font-size:0.88rem; color:#bbb;">🚀 Chọn Server Phát Mượt:</span>
+      <span style="font-size:0.88rem; color:#bbb;">🚀 Chọn Server Không QC:</span>
       <div class="server-options">
-        <button class="server-btn active" id="btn-invidious" onclick="setServer('invidious')">⚡ Invidious (Nhanh / Không QC)</button>
-        <button class="server-btn" id="btn-nadeko" onclick="setServer('nadeko')">🌐 Server 2</button>
+        <button class="server-btn active" id="btn-invidious" onclick="setServer('invidious')">⚡ Invidious (Nhanh)</button>
+        <button class="server-btn" id="btn-nadeko" onclick="setServer('nadeko')">🌐 Server Phụ</button>
         <button class="server-btn" id="btn-youtube" onclick="setServer('youtube')">▶ YouTube Gốc</button>
       </div>
     </div>
@@ -133,40 +131,68 @@
         <iframe id="mainPlayer" src="" allow="accelerometer; autoplay; encrypted-media; gyroscope" allowfullscreen></iframe>
       </div>
       <div class="video-info">
-        <div class="video-title" id="currentTitle">Đang tải danh sách video...</div>
+        <div class="video-title" id="currentTitle">Chọn video bên dưới để bắt đầu xem</div>
       </div>
     </div>
 
-    <!-- Live Trending Section -->
+    <!-- Categories -->
+    <div class="category-tabs">
+      <button class="tab-btn active" onclick="switchCategory('all', this)">🔥 Tất Cả Trend</button>
+      <button class="tab-btn" onclick="switchCategory('music', this)">🎵 Nhạc Trẻ & Ballad</button>
+      <button class="tab-btn" onclick="switchCategory('tiktok', this)">⚡ TikTok Remix Hot</button>
+      <button class="tab-btn" onclick="switchCategory('gaming', this)">🎮 Bóng Đá & Giải Trí</button>
+    </div>
+
+    <!-- Grid -->
     <div>
-      <div class="section-header">
-        <div class="section-title">🔥 YouTube Việt Nam Trending (Tự Động Cập Nhật Mới Nhất)</div>
-        <button class="refresh-btn" onclick="fetchLiveTrending()">🔄 Cập nhật ngay</button>
-      </div>
-      <div class="video-grid" id="videoGrid">
-        <div class="loading-msg">⏳ Đang kết nối YouTube API để lấy danh sách xu hướng mới nhất...</div>
-      </div>
+      <div class="video-grid" id="videoGrid"></div>
     </div>
   </main>
 
   <footer>
-    PH Tube &copy; 2026 - Real-time YouTube Trending No-Ads
+    PH Tube &copy; 2026 - Siêu Tốc & Không Quảng Cáo
   </footer>
 
   <script>
-    let currentVideoId = "";
+    let currentVideoId = "RHYDER";
     let currentServer = "invidious";
 
-    const serverEmbeds = {
+    const serverUrls = {
       invidious: "https://yewtu.be/embed/",
       nadeko: "https://inv.nadeko.net/embed/",
       youtube: "https://www.youtube-nocookie.com/embed/"
     };
 
+    const trendingDatabase = {
+      all: [
+        { id: "RHYDER", title: "TRONG ĐÔI MẮT THIẾU NỮ - RHYDER | OFFICIAL MUSIC VIDEO", channel: "RHYDER Official" },
+        { id: "-VBc27cNC7A", title: "NHẠC REMIX TIKTOK HAY NHẤT | BXH NHẠC TRẺ REMIX HOT TREND", channel: "DN TEAM" },
+        { id: "t4LbQLsw4bc", title: "NHẠC REMIX TIKTOK TRIỆU VIEW - Top 20 Nhạc Hot TikTok", channel: "Ness Remix" },
+        { id: "IZT7fDdDyR4", title: "Nhạc Trẻ Ballad Hot Trend - Top 20 Ca Khúc Về Nỗi Đau Tình Yêu", channel: "Mộng Mơ Ballad" },
+        { id: "EU9yrv9revU", title: "BXH NHẠC TRẺ REMIX HOT TREND - NHẠC TREND TIKTOK REMIX", channel: "DN TEAM" },
+        { id: "YQ8Ea1y8LB4", title: "NONSTOP DJ THÁI HOÀNG REMIX - BXH NHẠC TRẺ REMIX", channel: "Dolce Music" },
+        { id: "tOUtXMsyui8", title: "HIGHLIGHTS: VIỆT NAM - MALAYSIA | MỸ ĐÌNH MỞ HỘI", channel: "VFF Channel" },
+        { id: "ywEm3F43aS8", title: "HIGHLIGHTS: THÁI LAN - VIỆT NAM | SIÊU PHẨM QUẬT NGÃ VOI CHIẾN", channel: "VFF Channel" }
+      ],
+      music: [
+        { id: "RHYDER", title: "TRONG ĐÔI MẮT THIẾU NỮ - RHYDER | OFFICIAL MUSIC VIDEO", channel: "RHYDER Official" },
+        { id: "IZT7fDdDyR4", title: "Nhạc Trẻ Ballad Hot Trend - Top 20 Ca Khúc Về Nỗi Đau Tình Yêu", channel: "Mộng Mơ Ballad" },
+        { id: "YQ8Ea1y8LB4", title: "NONSTOP DJ THÁI HOÀNG REMIX - BXH NHẠC TRẺ REMIX", channel: "Dolce Music" }
+      ],
+      tiktok: [
+        { id: "-VBc27cNC7A", title: "NHẠC REMIX TIKTOK HAY NHẤT | BXH NHẠC TRẺ REMIX HOT TREND", channel: "DN TEAM" },
+        { id: "t4LbQLsw4bc", title: "NHẠC REMIX TIKTOK TRIỆU VIEW - Top 20 Nhạc Hot TikTok", channel: "Ness Remix" },
+        { id: "EU9yrv9revU", title: "BXH NHẠC TRẺ REMIX HOT TREND - NHẠC TREND TIKTOK REMIX", channel: "DN TEAM" }
+      ],
+      gaming: [
+        { id: "tOUtXMsyui8", title: "HIGHLIGHTS: VIỆT NAM - MALAYSIA | MỸ ĐÌNH MỞ HỘI", channel: "VFF Channel" },
+        { id: "ywEm3F43aS8", title: "HIGHLIGHTS: THÁI LAN - VIỆT NAM | SIÊU PHẨM QUẬT NGÃ VOI CHIẾN", channel: "VFF Channel" }
+      ]
+    };
+
     function updatePlayer() {
-      if (!currentVideoId) return;
       const player = document.getElementById("mainPlayer");
-      player.src = `${serverEmbeds[currentServer]}${currentVideoId}?autoplay=1`;
+      player.src = `${serverUrls[currentServer]}${currentVideoId}?autoplay=1`;
     }
 
     function setServer(serverKey) {
@@ -176,83 +202,39 @@
       updatePlayer();
     }
 
-    function loadVideo(id, title) {
-      currentVideoId = id;
-      updatePlayer();
-      document.getElementById("currentTitle").innerText = title || "Video YouTube";
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Tự động gọi API lấy video Trending Việt Nam Realtime
-    async function fetchLiveTrending() {
-      const grid = document.getElementById("videoGrid");
-      grid.innerHTML = '<div class="loading-msg">⏳ Đang lấy dữ liệu xu hướng mới nhất từ YouTube VN...</div>';
-
-      const apiInstances = [
-        "https://inv.nadeko.net/api/v1/trending?region=VN",
-        "https://yewtu.be/api/v1/trending?region=VN",
-        "https://pipedapi.kavin.rocks/trending?region=VN"
-      ];
-
-      let dataFetched = false;
-
-      for (let apiUrl of apiInstances) {
-        try {
-          const res = await fetch(apiUrl);
-          if (!res.ok) continue;
-          const videos = await res.json();
-
-          if (Array.isArray(videos) && videos.length > 0) {
-            renderTrendingVideos(videos);
-            dataFetched = true;
-            break;
-          }
-        } catch (e) {
-          console.log("Server API lỗi, thử server dự phòng tiếp theo...", e);
-        }
-      }
-
-      if (!dataFetched) {
-        // Backup nếu tất cả API công khai bận
-        grid.innerHTML = '<div class="loading-msg">⚠️ Server API bận. Vui lòng nhấn nút "🔄 Cập nhật ngay" hoặc gõ tên video vào ô tìm kiếm!</div>';
-      }
-    }
-
-    function renderTrendingVideos(videos) {
+    function renderGrid(categoryKey) {
       const grid = document.getElementById("videoGrid");
       grid.innerHTML = "";
+      const list = trendingDatabase[categoryKey] || trendingDatabase.all;
 
-      // Chọn video đầu tiên làm video phát mặc định
-      if (videos.length > 0 && !currentVideoId) {
-        const first = videos[0];
-        const vId = first.videoId || first.url?.split("v=")[1];
-        if (vId) {
-          loadVideo(vId, first.title);
-        }
-      }
-
-      videos.slice(0, 24).forEach(v => {
-        const vId = v.videoId || (v.url ? v.url.split("v=")[1] : "");
-        if (!vId) return;
-
-        const title = v.title || "Video";
-        const channel = v.author || v.uploaderName || "YouTube";
-        const thumb = v.videoThumbnails ? v.videoThumbnails.find(t => t.quality === "medium")?.url : `https://img.youtube.com/vi/${vId}/hqdefault.jpg`;
-
+      list.forEach(video => {
         const card = document.createElement("div");
         card.className = "video-card";
-        card.onclick = () => loadVideo(vId, title);
+        card.onclick = () => loadVideo(video.id, video.title);
         card.innerHTML = `
           <div class="thumbnail-box">
-            <img src="${thumb}" alt="${title}" onerror="this.src='https://img.youtube.com/vi/${vId}/hqdefault.jpg'">
+            <img src="https://img.youtube.com/vi/${video.id}/hqdefault.jpg" alt="${video.title}">
           </div>
           <div class="card-info">
-            <div class="card-title">${title}</div>
-            <div class="card-channel">${channel}</div>
+            <div class="card-title">${video.title}</div>
+            <div class="card-channel">${video.channel}</div>
           </div>
         `;
         grid.appendChild(card);
       });
+    }
+
+    function switchCategory(key, btn) {
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderGrid(key);
+    }
+
+    function loadVideo(id, title) {
+      currentVideoId = id;
+      updatePlayer();
+      document.getElementById("currentTitle").innerText = title || "Video Trending";
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function extractVideoId(url) {
@@ -261,28 +243,15 @@
       return (match && match[2].length === 11) ? match[2] : url;
     }
 
-    async function handleSearch() {
+    function handleSearch() {
       const input = document.getElementById("searchInput").value.trim();
       if (!input) return;
-
       const videoId = extractVideoId(input);
       if (videoId.length === 11) {
         loadVideo(videoId, "Video Đã Chọn");
       } else {
-        // Tìm kiếm realtime qua API
-        const grid = document.getElementById("videoGrid");
-        grid.innerHTML = `<div class="loading-msg">🔍 Đang tìm kiếm "${input}"...</div>`;
-        try {
-          const res = await fetch(`https://inv.nadeko.net/api/v1/search?q=${encodeURIComponent(input)}`);
-          const results = await res.json();
-          if (Array.isArray(results) && results.length > 0) {
-            renderTrendingVideos(results.filter(r => r.type === "video"));
-          } else {
-            window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(input)}`, '_blank');
-          }
-        } catch (e) {
-          window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(input)}`, '_blank');
-        }
+        // Mở tìm kiếm trực tiếp trên YouTube nếu gõ từ khóa tự do
+        window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(input)}`, '_blank');
       }
     }
 
@@ -290,8 +259,9 @@
       if (e.key === "Enter") handleSearch();
     });
 
-    // Tự động load Trending Realtime khi vừa mở web
-    fetchLiveTrending();
+    // Khởi động load video đầu tiên và danh sách
+    loadVideo("RHYDER", "TRONG ĐÔI MẮT THIẾU NỮ - RHYDER | OFFICIAL MUSIC VIDEO");
+    renderGrid("all");
   </script>
 </body>
 </html>
