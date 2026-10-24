@@ -1,635 +1,341 @@
 <!DOCTYPE html>
-<html lang="vi" class="dark">
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdFreeTube - Xem YouTube Không Quảng Cáo & TikTok Trend VN</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            DEFAULT: '#DB5304',
-                            hover: '#B84300',
-                            light: '#FF6B1A',
-                            dark: '#8C3200'
-                        },
-                        darkbg: '#000000',
-                        surface: '#0F0F0F',
-                        card: '#181818',
-                        cardHover: '#282828'
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Google Font: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #000000;
-            color: #F1F1F1;
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #000000;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #282828;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #DB5304;
-        }
-        .aspect-video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            height: 0;
-            overflow: hidden;
-        }
-        .aspect-video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PH Tube - Xem YouTube Không Quảng Cáo</title>
+  <style>
+    :root {
+      --bg-color: #0d0d0d;
+      --card-bg: #1a1a1a;
+      --accent-color: #DB5304;
+      --accent-hover: #ff6a1a;
+      --text-color: #ffffff;
+      --text-dim: #aaaaaa;
+      --border-color: #2a2a2a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #000000;
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--accent-color);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .search-box {
+      display: flex;
+      flex: 1;
+      max-width: 550px;
+      gap: 8px;
+    }
+
+    .search-box input {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent-color);
+    }
+
+    .search-box button {
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: none;
+      background-color: var(--accent-color);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .search-box button:hover {
+      background-color: var(--accent-hover);
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      gap: 25px;
+    }
+
+    .player-section {
+      width: 100%;
+      background-color: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      border: 1px solid var(--border-color);
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+      height: 0;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-info {
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .video-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent-color);
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .video-card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .video-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-color);
+    }
+
+    .thumbnail-box {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      background-color: #222;
+    }
+
+    .thumbnail-box img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-info {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-channel {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: auto;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+  </style>
 </head>
-<body class="bg-darkbg text-gray-100 min-h-screen flex flex-col">
+<body>
 
-    <!-- Header / Navbar -->
-    <header class="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-neutral-800 px-4 py-3">
-        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-            
-            <!-- Logo -->
-            <div class="flex items-center space-x-2 cursor-pointer" onclick="switchTab('player')">
-                <div class="bg-brand text-black p-2 rounded-xl flex items-center justify-center font-bold">
-                    <i data-lucide="play-square" class="w-6 h-6 text-black fill-current"></i>
-                </div>
-                <span class="text-xl font-bold tracking-tight text-white">AdFree<span class="text-brand">Tube</span></span>
-            </div>
+  <header>
+    <div class="logo" onclick="loadVideo('-VBc27cNC7A', 'NHẠC REMIX TIKTOK HAY NHẤT 2026')">
+      <span>▶</span> PH Tube
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Dán link YouTube hoặc nhập ID video/từ khóa...">
+      <button onclick="handleSearch()">Xem ngay</button>
+    </div>
+  </header>
 
-            <!-- Input / Search Bar -->
-            <div class="flex-1 max-w-2xl mx-2">
-                <form id="search-form" onsubmit="handleSearch(event)" class="relative flex items-center">
-                    <input 
-                        type="text" 
-                        id="video-input"
-                        placeholder="Dán link YouTube (URL/Shorts), Video ID hoặc tìm bài hát..." 
-                        class="w-full bg-neutral-900 text-white placeholder-neutral-500 rounded-full py-2.5 pl-5 pr-12 text-sm border border-neutral-700 focus:outline-none focus:border-brand transition-all shadow-inner"
-                        required
-                    />
-                    <button 
-                        type="submit" 
-                        class="absolute right-1 top-1/2 -translate-y-1/2 bg-brand hover:bg-brand-hover text-white p-2 rounded-full transition-colors flex items-center justify-center"
-                        title="Phát hoặc Tìm kiếm"
-                    >
-                        <i data-lucide="search" class="w-4 h-4"></i>
-                    </button>
-                </form>
-            </div>
-
-            <!-- Navigation Links -->
-            <nav class="flex items-center gap-1.5 sm:gap-2">
-                <button onclick="switchTab('player')" id="tab-player-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors bg-brand text-white">
-                    <i data-lucide="music" class="w-4 h-4"></i>
-                    <span>Trend TikTok VN</span>
-                </button>
-                <button onclick="switchTab('history')" id="tab-history-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors text-neutral-400 hover:text-white hover:bg-neutral-800">
-                    <i data-lucide="history" class="w-4 h-4"></i>
-                    <span>Lịch sử</span>
-                </button>
-                <button onclick="switchTab('guide')" id="tab-guide-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors text-neutral-400 hover:text-white hover:bg-neutral-800">
-                    <i data-lucide="github" class="w-4 h-4"></i>
-                    <span>Upload GitHub</span>
-                </button>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Main Content Area -->
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6">
-
-        <!-- TAB 1: PLAYER & TIKTOK TREND VIETNAM -->
-        <section id="tab-player" class="block space-y-6">
-            
-            <!-- Video Player Section -->
-            <div class="bg-surface rounded-2xl border border-neutral-800 overflow-hidden shadow-2xl">
-                <div id="player-container" class="aspect-video-container bg-black flex items-center justify-center">
-                    <!-- Default Player Placeholder -->
-                    <div id="player-placeholder" class="text-center p-8 max-w-md">
-                        <div class="w-16 h-16 bg-neutral-900 border border-neutral-800 rounded-2xl flex items-center justify-center mx-auto mb-4 text-brand">
-                            <i data-lucide="music-4" class="w-8 h-8"></i>
-                        </div>
-                        <h2 class="text-xl font-bold mb-2 text-white">Xem YouTube & Nhạc TikTok Không Quảng Cáo</h2>
-                        <p class="text-sm text-neutral-400 mb-6">Chọn bài hát Hot Trend TikTok Việt Nam bên dưới hoặc dán bất kỳ đường link YouTube nào vào ô tìm kiếm.</p>
-                        <button onclick="loadSampleVideo()" class="bg-brand hover:bg-brand-hover text-white px-5 py-2.5 rounded-xl font-medium text-sm transition-all inline-flex items-center gap-2 shadow-lg shadow-brand/20">
-                            <i data-lucide="sparkles" class="w-4 h-4"></i>
-                            Phát ngẫu nhiên nhạc TikTok Hot
-                        </button>
-                    </div>
-                    <!-- Dynamic iFrame Embed inserted here -->
-                </div>
-
-                <!-- Video Info Bar -->
-                <div id="video-info" class="p-4 md:p-5 border-t border-neutral-800/80 hidden bg-neutral-900/40">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div>
-                            <h1 id="current-video-title" class="text-lg md:text-xl font-bold text-white mb-1">Tiêu đề video</h1>
-                            <p id="current-video-id" class="text-xs text-neutral-400 font-mono">ID: -</p>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="copyCurrentLink()" class="flex items-center gap-1.5 px-3 py-2 bg-neutral-800 hover:bg-neutral-700 text-white rounded-xl text-xs font-medium transition-colors">
-                                <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
-                                Sao chép link
-                            </button>
-                            <a id="external-yt-link" href="#" target="_blank" class="flex items-center gap-1.5 px-3 py-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 rounded-xl text-xs font-medium transition-colors">
-                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                                Mở trên YouTube
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Preloaded TikTok Trend Vietnam Section -->
-            <div>
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                    <h2 id="section-title" class="text-lg font-bold text-white flex items-center gap-2">
-                        <i data-lucide="flame" class="w-5 h-5 text-brand"></i>
-                        BXH Nhạc Trend TikTok Việt Nam Hot Nhất
-                    </h2>
-                    <span id="result-count" class="text-xs text-neutral-500">Cập nhật liên tục • Không quảng cáo</span>
-                </div>
-
-                <!-- Results Grid -->
-                <div id="search-results-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <!-- Cards dynamic generation -->
-                </div>
-            </div>
-        </section>
-
-        <!-- TAB 2: HISTORY -->
-        <section id="tab-history" class="hidden space-y-6">
-            <div class="flex items-center justify-between border-b border-neutral-800 pb-4">
-                <div>
-                    <h1 class="text-2xl font-bold text-white flex items-center gap-2">
-                        <i data-lucide="clock" class="w-6 h-6 text-brand"></i>
-                        Lịch sử đã xem
-                    </h1>
-                    <p class="text-xs text-neutral-400 mt-1">Danh sách video & bài hát bạn đã thưởng thức (được lưu trên trình duyệt).</p>
-                </div>
-                <button onclick="clearHistory()" class="flex items-center gap-1.5 px-3 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl text-xs font-medium transition-colors border border-red-500/20">
-                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                    Xóa lịch sử
-                </button>
-            </div>
-
-            <div id="history-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <!-- History list dynamic generation -->
-            </div>
-
-            <div id="history-empty" class="text-center py-16 hidden">
-                <i data-lucide="film" class="w-12 h-12 text-neutral-600 mx-auto mb-3"></i>
-                <p class="text-neutral-400 font-medium">Chưa có lịch sử xem video nào.</p>
-                <p class="text-xs text-neutral-600 mt-1">Hãy chọn bài hát trend TikTok để lưu danh sách vào đây!</p>
-            </div>
-        </section>
-
-        <!-- TAB 3: GITHUB PAGES DEPLOYMENT GUIDE -->
-        <section id="tab-guide" class="hidden space-y-6">
-            <div class="border-b border-neutral-800 pb-4">
-                <h1 class="text-2xl font-bold text-white flex items-center gap-2">
-                    <i data-lucide="github" class="w-6 h-6 text-brand"></i>
-                    Hướng Dẫn Đưa App Lên GitHub Pages Miễn Phí
-                </h1>
-                <p class="text-sm text-neutral-400 mt-1">Chỉ với 4 bước đơn giản trong 2 phút, bạn sẽ có website riêng chạy vĩnh viễn không tốn tiền server.</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Steps Container -->
-                <div class="lg:col-span-2 space-y-4">
-                    
-                    <!-- Step 1 -->
-                    <div class="bg-surface p-5 rounded-2xl border border-neutral-800 space-y-2">
-                        <div class="flex items-center gap-3">
-                            <span class="w-8 h-8 rounded-full bg-brand text-white font-bold flex items-center justify-center text-sm">1</span>
-                            <h3 class="text-base font-bold text-white">Tạo Repository mới trên GitHub</h3>
-                        </div>
-                        <p class="text-sm text-neutral-300 pl-11">
-                            Truy cập vào <a href="https://github.com" target="_blank" class="text-brand hover:underline font-semibold">GitHub.com</a> và đăng nhập. Nhấn nút <strong>New</strong> (hoặc dấu <strong>+</strong> chọn New repository).
-                        </p>
-                        <div class="pl-11 pt-2">
-                            <ul class="list-disc list-inside text-xs text-neutral-400 space-y-1 bg-neutral-950 p-3 rounded-xl border border-neutral-800">
-                                <li>Repository name: nhập <code class="text-brand font-bold">adfree-tiktok-tube</code></li>
-                                <li>Chọn chế độ: <strong>Public</strong> (bắt buộc để dùng free)</li>
-                                <li>Bấm nút <strong>Create repository</strong> ở cuối trang</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="bg-surface p-5 rounded-2xl border border-neutral-800 space-y-2">
-                        <div class="flex items-center gap-3">
-                            <span class="w-8 h-8 rounded-full bg-brand text-white font-bold flex items-center justify-center text-sm">2</span>
-                            <h3 class="text-base font-bold text-white">Tạo tệp index.html</h3>
-                        </div>
-                        <p class="text-sm text-neutral-300 pl-11">
-                            Tại giao diện Repository vừa tạo:
-                        </p>
-                        <div class="pl-11 pt-1">
-                            <ol class="list-decimal list-inside text-xs text-neutral-400 space-y-1 bg-neutral-950 p-3 rounded-xl border border-neutral-800">
-                                <li>Nhấn vào liên kết <strong class="text-white">creating a new file</strong>.</li>
-                                <li>Đặt tên tệp chính xác là: <code class="text-brand font-bold">index.html</code></li>
-                                <li>Dán toàn bộ mã nguồn HTML này vào ô nội dung tệp.</li>
-                                <li>Nhấn nút <strong>Commit changes...</strong> &rarr; chọn <strong>Commit changes</strong>.</li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="bg-surface p-5 rounded-2xl border border-neutral-800 space-y-2">
-                        <div class="flex items-center gap-3">
-                            <span class="w-8 h-8 rounded-full bg-brand text-white font-bold flex items-center justify-center text-sm">3</span>
-                            <h3 class="text-base font-bold text-white">Kích hoạt GitHub Pages</h3>
-                        </div>
-                        <p class="text-sm text-neutral-300 pl-11">
-                            Bật tính năng phát website công khai:
-                        </p>
-                        <div class="pl-11 pt-1">
-                            <ol class="list-decimal list-inside text-xs text-neutral-400 space-y-1 bg-neutral-950 p-3 rounded-xl border border-neutral-800">
-                                <li>Chuyển sang tab <strong>Settings</strong> của Repository.</li>
-                                <li>Ở danh mục bên trái, cuộn xuống chọn <strong>Pages</strong>.</li>
-                                <li>Tại <strong>Build and deployment</strong> &rarr; Branch: chọn <code class="text-white font-bold">main</code> (hoặc <code class="text-white font-bold">master</code>), thư mục giữ nguyên <code class="text-white font-bold">/(root)</code>.</li>
-                                <li>Nhấn <strong>Save</strong>.</li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="bg-surface p-5 rounded-2xl border border-neutral-800 space-y-2">
-                        <div class="flex items-center gap-3">
-                            <span class="w-8 h-8 rounded-full bg-brand text-white font-bold flex items-center justify-center text-sm">4</span>
-                            <h3 class="text-base font-bold text-white">Truy cập Website của bạn</h3>
-                        </div>
-                        <p class="text-sm text-neutral-300 pl-11">
-                            Sau khoảng 1-2 phút, GitHub sẽ tạo cho bạn link web có định dạng:
-                        </p>
-                        <div class="pl-11 pt-1">
-                            <div class="bg-neutral-950 p-3 rounded-xl border border-neutral-800 text-xs font-mono text-brand flex items-center justify-between">
-                                <span>https://&lt;your-username&gt;.github.io/adfree-tiktok-tube/</span>
-                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Side Information / Features -->
-                <div class="space-y-4">
-                    <div class="bg-surface p-5 rounded-2xl border border-neutral-800 space-y-3">
-                        <h3 class="text-base font-bold text-white flex items-center gap-2">
-                            <i data-lucide="shield-check" class="w-5 h-5 text-brand"></i>
-                            Cơ chế xem không QC
-                        </h3>
-                        <p class="text-xs text-neutral-400 leading-relaxed">
-                            Ứng dụng gọi trực tiếp qua máy chủ <code class="text-brand">www.youtube-nocookie.com</code> kèm cấu hình chặn theo dõi. Mọi video sẽ được phát mịn màng không bị gián đoạn bởi quảng cáo.
-                        </p>
-                    </div>
-
-                    <div class="bg-surface p-5 rounded-2xl border border-neutral-800 space-y-3">
-                        <h3 class="text-base font-bold text-white flex items-center gap-2">
-                            <i data-lucide="music-2" class="w-5 h-5 text-brand"></i>
-                            Tính năng TikTok VN
-                        </h3>
-                        <ul class="text-xs text-neutral-400 space-y-2">
-                            <li class="flex items-center gap-2">
-                                <i data-lucide="check" class="w-4 h-4 text-brand"></i>
-                                Tích hợp sẵn 12+ bản hit Trend TikTok Việt Nam
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i data-lucide="check" class="w-4 h-4 text-brand"></i>
-                                Hỗ trợ cả link YouTube Shorts, link chia sẻ di động
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i data-lucide="check" class="w-4 h-4 text-brand"></i>
-                                Tự động ghi nhận Lịch sử xem thông minh
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i data-lucide="check" class="w-4 h-4 text-brand"></i>
-                                Tương thích hoàn hảo trên điện thoại & máy tính
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-5 right-5 bg-brand text-white px-4 py-2.5 rounded-xl shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2 text-sm z-50">
-        <i data-lucide="info" class="w-4 h-4"></i>
-        <span id="toast-message">Thông báo</span>
+  <main>
+    <div class="player-section">
+      <div class="video-container">
+        <iframe id="mainPlayer" src="https://www.youtube-nocookie.com/embed/-VBc27cNC7A?autoplay=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="video-info">
+        <div class="video-title" id="currentTitle">NHẠC REMIX TIKTOK HAY NHẤT 2026 | BXH NHẠC TRẺ REMIX HOT TREND 2026</div>
+      </div>
     </div>
 
-    <!-- Application Script Logic -->
-    <script>
-        // Preloaded Full TikTok Trend Việt Nam Music Tracks
-        const TIKTOK_TREND_VIETNAM = [
-            { id: "4-Q4Iyl25U8", title: "Mật Ngọt - Dunghoangpham (Lofi Ver)", channel: "TikTok Trend VN" },
-            { id: "S1hC1AisHms", title: "Lệ Lưu Ly - Vũ Phụng Tiên x DT Tập Rap (Remix)", channel: "ACV Music" },
-            { id: "UylS4xX2gJg", title: "Cậu Cả - X2X (TikTok Speedup Version)", channel: "X2X Official" },
-            { id: "608-dO1bA7s", title: "Gió - Jank (SpeedUp TikTok Remix)", channel: "Jank Official" },
-            { id: "p1GfA2-J12A", title: "Đưa Em Về Nhàa - GREY D x Chillies", channel: "ST315 Entertainment" },
-            { id: "0q4j8p9SjP4", title: "Cắt Đôi Nỗi Sầu - Tăng Duy Tân", channel: "BigArts Year" },
-            { id: "9P6b_2gSg2s", title: "À Lôi - Double2T x Masew", channel: "Masew Official" },
-            { id: "8W4Y1K60Y4M", title: "Ngày Tốt Lành - Đạt G (Remix TikTok)", channel: "TikTok Hits" },
-            { id: "A28l333xJ0A", title: "Thịnh Vượng Việt Nam Bright Up - B Ray x Hòa Minzy", channel: "Music Trending" },
-            { id: "77c7xN2F6eU", title: "Waiting For You - MONO x Onionn", channel: "MONO Official" },
-            { id: "g3bL9sL0M8g", title: "Bật Tình Yêu Lên - Hòa Minzy x Tăng Duy Tân", channel: "Tăng Duy Tân" },
-            { id: "Vp1ZpL-cQpA", title: "Yêu Anh Đi Mẹ Anh Bán Bánh Mì - Phúc Du", channel: "Phúc Du Official" }
-        ];
+    <div>
+      <div class="section-title">🎵 Nhạc Trend TikTok Việt Nam 2026 Hot Nhất</div>
+      <div class="video-grid" id="playlistGrid"></div>
+    </div>
+  </main>
 
-        let currentVideo = null;
+  <footer>
+    PH Tube &copy; 2026 - Xem YouTube Nhúng Không Quảng Cáo
+  </footer>
 
-        // Initialize Lucide Icons & Defaults
-        window.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            renderTikTokGrid();
-            loadHistory();
-        });
+  <script>
+    const tiktokPlaylist = [
+      {
+        id: "-VBc27cNC7A",
+        title: "NHẠC REMIX TIKTOK HAY NHẤT 2026 | BXH NHẠC TRẺ REMIX HOT TREND 2026",
+        channel: "DN TEAM"
+      },
+      {
+        id: "t4LbQLsw4bc",
+        title: "NHẠC REMIX TIKTOK TRIỆU VIEW - Top 20 Nhạc Hot TikTok 2026",
+        channel: "Ness Remix"
+      },
+      {
+        id: "EU9yrv9revU",
+        title: "BXH NHẠC TRẺ REMIX HOT TREND 2026 | NHẠC TREND TIKTOK",
+        channel: "DN TEAM"
+      },
+      {
+        id: "IZT7fDdDyR4",
+        title: "Nhạc Trẻ Ballad Hot Trend 2026 ♫ Top 20 Ca Khúc Hay Nhất",
+        channel: "Mộng Mơ Ballad"
+      },
+      {
+        id: "YQ8Ea1y8LB4",
+        title: "NHẠC REMIX TIKTOK HAY 2026🔥NONSTOP 2026 DJ THÁI HOÀNG REMIX",
+        channel: "Dolce Music"
+      }
+    ];
 
-        // Tab Switching Logic
-        function switchTab(tabId) {
-            const tabs = ['player', 'history', 'guide'];
-            tabs.forEach(tab => {
-                const element = document.getElementById(`tab-${tab}`);
-                const btn = document.getElementById(`tab-${tab}-btn`);
-                
-                if (tab === tabId) {
-                    element.classList.remove('hidden');
-                    btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors bg-brand text-white";
-                } else {
-                    element.classList.add('hidden');
-                    btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors text-neutral-400 hover:text-white hover:bg-neutral-800";
-                }
-            });
+    function renderPlaylist() {
+      const grid = document.getElementById("playlistGrid");
+      grid.innerHTML = "";
+      tiktokPlaylist.forEach(video => {
+        const card = document.createElement("div");
+        card.className = "video-card";
+        card.onclick = () => loadVideo(video.id, video.title);
+        card.innerHTML = `
+          <div class="thumbnail-box">
+            <img src="https://img.youtube.com/vi/${video.id}/hqdefault.jpg" alt="${video.title}">
+          </div>
+          <div class="card-info">
+            <div class="card-title">${video.title}</div>
+            <div class="card-channel">${video.channel}</div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
 
-            if (tabId === 'history') {
-                renderHistory();
-            }
-        }
+    function loadVideo(id, title) {
+      const player = document.getElementById("mainPlayer");
+      player.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
+      document.getElementById("currentTitle").innerText = title || "Video YouTube Không Quảng Cáo";
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-        // Helper: Extract YouTube Video ID from any URL format (including Shorts, mobile links)
-        function extractVideoID(input) {
-            if (!input) return null;
-            input = input.trim();
-            
-            // Standard watch, shorts, embed, or youtu.be patterns
-            const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
-            const match = input.match(regExp);
+    function extractVideoId(url) {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? match[2] : url;
+    }
 
-            if (match && match[1]) {
-                return match[1];
-            } else if (input.length === 11 && !input.includes(' ') && !input.includes('.')) {
-                return input; // Raw 11-character Video ID
-            }
-            return null;
-        }
+    function handleSearch() {
+      const input = document.getElementById("searchInput").value.trim();
+      if (!input) return;
+      const videoId = extractVideoId(input);
+      if (videoId.length === 11) {
+        loadVideo(videoId, "Video YouTube Đã Chọn");
+      } else {
+        window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(input)}`, '_blank');
+      }
+    }
 
-        // Handle Search or URL Input
-        function handleSearch(event) {
-            event.preventDefault();
-            const inputVal = document.getElementById('video-input').value;
-            if (!inputVal) return;
+    document.getElementById("searchInput").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        handleSearch();
+      }
+    });
 
-            const videoId = extractVideoID(inputVal);
-
-            if (videoId) {
-                playVideo(videoId, `Video YouTube (${videoId})`);
-            } else {
-                // Perform local filter on preloaded TikTok songs or generic search
-                performSearch(inputVal);
-            }
-        }
-
-        // Play YouTube Video in Privacy-Enhanced Ad-Free Embed Player
-        function playVideo(videoId, title = "") {
-            const playerContainer = document.getElementById('player-container');
-            const videoInfo = document.getElementById('video-info');
-            const videoTitleEl = document.getElementById('current-video-title');
-            const videoIdEl = document.getElementById('current-video-id');
-            const ytLink = document.getElementById('external-yt-link');
-
-            // Construct Privacy-Enhanced No-Cookie Embed URL
-            const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3`;
-
-            playerContainer.innerHTML = `
-                <iframe 
-                    src="${embedUrl}" 
-                    title="Ad-Free YouTube Player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowfullscreen>
-                </iframe>
-            `;
-
-            const finalTitle = title || `Video (${videoId})`;
-            videoTitleEl.textContent = finalTitle;
-            videoIdEl.textContent = `YouTube ID: ${videoId}`;
-            ytLink.href = `https://www.youtube.com/watch?v=${videoId}`;
-            videoInfo.classList.remove('hidden');
-
-            currentVideo = { id: videoId, title: finalTitle, timestamp: Date.now() };
-
-            // Save to LocalStorage History
-            saveToHistory(currentVideo);
-
-            // Switch to player tab and scroll up smoothly
-            switchTab('player');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Load Random TikTok Trend Track
-        function loadSampleVideo() {
-            const randomSample = TIKTOK_TREND_VIETNAM[Math.floor(Math.random() * TIKTOK_TREND_VIETNAM.length)];
-            playVideo(randomSample.id, randomSample.title);
-        }
-
-        // Search / Filter Videos locally
-        function performSearch(query) {
-            const resultsGrid = document.getElementById('search-results-grid');
-            const sectionTitle = document.getElementById('section-title');
-            
-            sectionTitle.innerHTML = `<i data-lucide="search" class="w-5 h-5 text-brand"></i> Kết quả tìm kiếm: "${escapeHtml(query)}"`;
-            
-            const filtered = TIKTOK_TREND_VIETNAM.filter(v => 
-                v.title.toLowerCase().includes(query.toLowerCase()) || 
-                v.channel.toLowerCase().includes(query.toLowerCase())
-            );
-
-            let displayList = [...filtered];
-            if (displayList.length === 0) {
-                displayList = TIKTOK_TREND_VIETNAM;
-                showToast(`Không thấy bài khớp tên. Hiển thị gợi ý TikTok hot!`);
-            } else {
-                showToast(`Đã tìm thấy ${filtered.length} bài hát phù hợp`);
-            }
-
-            renderVideoGrid(resultsGrid, displayList);
-        }
-
-        // Render Video Cards Grid
-        function renderVideoGrid(container, videos) {
-            container.innerHTML = videos.map(video => `
-                <div onclick="playVideo('${video.id}', '${escapeHtml(video.title)}')" class="bg-surface hover:bg-cardHover border border-neutral-800 rounded-xl overflow-hidden cursor-pointer transition-all hover:scale-[1.02] group shadow-md">
-                    <div class="relative aspect-video bg-neutral-900">
-                        <img 
-                            src="https://i.ytimg.com/vi/${video.id}/hqdefault.jpg" 
-                            alt="${escapeHtml(video.title)}" 
-                            class="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
-                            onerror="this.src='https://placehold.co/480x270/181818/DB5304?text=TikTok+Trend+VN'"
-                        />
-                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
-                        <div class="absolute bottom-2 right-2 bg-brand text-black text-[10px] font-bold px-1.5 py-0.5 rounded shadow">
-                            NO ADS
-                        </div>
-                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div class="bg-brand text-white p-3 rounded-full shadow-xl">
-                                <i data-lucide="play" class="w-5 h-5 fill-current"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-3">
-                        <h3 class="font-semibold text-sm text-white line-clamp-2 group-hover:text-brand transition-colors">${escapeHtml(video.title)}</h3>
-                        <p class="text-xs text-neutral-400 mt-1 flex items-center gap-1">
-                            <i data-lucide="music-2" class="w-3 h-3 text-brand"></i>
-                            ${escapeHtml(video.channel || 'TikTok Trend VN')}
-                        </p>
-                    </div>
-                </div>
-            `).join('');
-
-            lucide.createIcons();
-        }
-
-        // Initial TikTok Trend Grid
-        function renderTikTokGrid() {
-            const resultsGrid = document.getElementById('search-results-grid');
-            renderVideoGrid(resultsGrid, TIKTOK_TREND_VIETNAM);
-        }
-
-        // --- LOCAL STORAGE HISTORY FUNCTIONS ---
-        function getHistory() {
-            try {
-                return JSON.parse(localStorage.getItem('adfree_yt_history')) || [];
-            } catch (e) {
-                return [];
-            }
-        }
-
-        function saveToHistory(video) {
-            let history = getHistory();
-            history = history.filter(item => item.id !== video.id);
-            history.unshift(video);
-            if (history.length > 30) history.pop();
-            localStorage.setItem('adfree_yt_history', JSON.stringify(history));
-        }
-
-        function renderHistory() {
-            const historyGrid = document.getElementById('history-grid');
-            const historyEmpty = document.getElementById('history-empty');
-            const history = getHistory();
-
-            if (history.length === 0) {
-                historyGrid.innerHTML = '';
-                historyEmpty.classList.remove('hidden');
-                return;
-            }
-
-            historyEmpty.classList.add('hidden');
-            historyGrid.innerHTML = history.map(item => `
-                <div onclick="playVideo('${item.id}', '${escapeHtml(item.title)}')" class="bg-surface hover:bg-cardHover border border-neutral-800 rounded-xl overflow-hidden cursor-pointer transition-all hover:scale-[1.02] group">
-                    <div class="relative aspect-video bg-neutral-900">
-                        <img 
-                            src="https://i.ytimg.com/vi/${item.id}/hqdefault.jpg" 
-                            alt="${escapeHtml(item.title)}" 
-                            class="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
-                            onerror="this.src='https://placehold.co/480x270/181818/DB5304?text=AdFree+Tube'"
-                        />
-                        <div class="absolute bottom-2 right-2 bg-black/80 text-neutral-400 text-[10px] px-1.5 py-0.5 rounded">
-                            ${new Date(item.timestamp).toLocaleDateString('vi-VN')}
-                        </div>
-                    </div>
-                    <div class="p-3">
-                        <h3 class="font-semibold text-sm text-white line-clamp-2 group-hover:text-brand transition-colors">${escapeHtml(item.title)}</h3>
-                        <p class="text-xs text-neutral-500 mt-1 font-mono">ID: ${item.id}</p>
-                    </div>
-                </div>
-            `).join('');
-
-            lucide.createIcons();
-        }
-
-        function clearHistory() {
-            if (confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử xem không?")) {
-                localStorage.removeItem('adfree_yt_history');
-                renderHistory();
-                showToast("Đã xóa lịch sử xem");
-            }
-        }
-
-        function loadHistory() {
-            getHistory();
-        }
-
-        // Helper: Copy current video link
-        function copyCurrentLink() {
-            if (!currentVideo) return;
-            const link = `https://www.youtube.com/watch?v=${currentVideo.id}`;
-            
-            const tempInput = document.createElement("input");
-            tempInput.value = link;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempInput);
-
-            showToast("Đã sao chép đường link!");
-        }
-
-        // Toast Notification System
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toast-message');
-            toastMessage.textContent = message;
-
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
-
-            setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
-        }
-
-        // Utility: Escape HTML to prevent XSS
-        function escapeHtml(str) {
-            return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-        }
-    </script>
+    renderPlaylist();
+  </script>
 </body>
 </html>
