@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PH Tube - Xem YouTube Không Quảng Cáo</title>
+  <title>PH Tube - Chặn Quảng Cáo Cực Mạnh</title>
   <style>
     :root {
       --bg-color: #0d0d0d;
@@ -15,231 +15,106 @@
       --border-color: #2a2a2a;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg-color);
       color: var(--text-color);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      display: flex; flex-direction: column; min-height: 100vh;
     }
 
     header {
       background-color: #000000;
       border-bottom: 1px solid var(--border-color);
       padding: 12px 20px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 15px;
+      position: sticky; top: 0; z-index: 100;
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: var(--accent-color);
-      text-decoration: none;
-      cursor: pointer;
+      font-size: 1.3rem; font-weight: bold; color: var(--accent-color);
+      text-decoration: none; cursor: pointer; display: flex; align-items: center; gap: 8px;
     }
 
-    .search-box {
-      display: flex;
-      flex: 1;
-      max-width: 550px;
-      gap: 8px;
-    }
-
+    .search-box { display: flex; flex: 1; max-width: 550px; gap: 8px; }
     .search-box input {
-      flex: 1;
-      padding: 10px 16px;
-      border-radius: 20px;
-      border: 1px solid var(--border-color);
-      background-color: var(--card-bg);
-      color: #fff;
-      font-size: 0.95rem;
-      outline: none;
+      flex: 1; padding: 10px 16px; border-radius: 20px;
+      border: 1px solid var(--border-color); background-color: var(--card-bg);
+      color: #fff; font-size: 0.95rem; outline: none;
     }
-
-    .search-box input:focus {
-      border-color: var(--accent-color);
-    }
-
+    .search-box input:focus { border-color: var(--accent-color); }
     .search-box button {
-      padding: 10px 20px;
-      border-radius: 20px;
-      border: none;
-      background-color: var(--accent-color);
-      color: #fff;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s;
+      padding: 10px 20px; border-radius: 20px; border: none;
+      background-color: var(--accent-color); color: #fff; font-weight: bold; cursor: pointer;
     }
 
-    .search-box button:hover {
-      background-color: var(--accent-hover);
-    }
+    main { display: flex; flex-direction: column; padding: 20px; max-width: 1400px; margin: 0 auto; width: 100%; gap: 20px; }
 
-    main {
-      display: flex;
-      flex-direction: column;
-      padding: 20px;
-      max-width: 1400px;
-      margin: 0 auto;
-      width: 100%;
-      gap: 25px;
+    .server-switcher {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--card-bg); padding: 10px 16px; border-radius: 8px; border: 1px solid var(--border-color);
     }
+    .server-btn {
+      padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border-color);
+      background: #252525; color: #fff; cursor: pointer; font-size: 0.85rem;
+    }
+    .server-btn.active { background: var(--accent-color); border-color: var(--accent-color); font-weight: bold; }
 
     .player-section {
-      width: 100%;
-      background-color: #000;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-      border: 1px solid var(--border-color);
+      width: 100%; background-color: #000; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5); border: 1px solid var(--border-color);
     }
 
     .video-container {
-      position: relative;
-      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-      height: 0;
-      overflow: hidden;
-      background: #000;
+      position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000;
     }
+    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
+    .video-info { padding: 16px 20px; }
+    .video-title { font-size: 1.2rem; font-weight: 600; color: #fff; }
 
-    .video-info {
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+    .section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; color: var(--accent-color); }
 
-    .video-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .section-title {
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--accent-color);
-    }
-
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
+    .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
     .video-card {
-      background-color: var(--card-bg);
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid var(--border-color);
-      cursor: pointer;
-      transition: transform 0.2s, border-color 0.2s;
-      display: flex;
-      flex-direction: column;
+      background-color: var(--card-bg); border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--border-color); cursor: pointer; transition: transform 0.2s;
     }
+    .video-card:hover { transform: translateY(-4px); border-color: var(--accent-color); }
+    .thumbnail-box { position: relative; width: 100%; padding-top: 56.25%; background: #222; }
+    .thumbnail-box img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+    .card-info { padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+    .card-title { font-size: 0.9rem; font-weight: 600; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-channel { font-size: 0.8rem; color: var(--text-dim); }
 
-    .video-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent-color);
-    }
-
-    .thumbnail-box {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%;
-      background-color: #222;
-    }
-
-    .thumbnail-box img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .card-info {
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex: 1;
-    }
-
-    .card-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      line-height: 1.3;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .card-channel {
-      font-size: 0.82rem;
-      color: var(--text-dim);
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      margin-top: auto;
-      border-top: 1px solid var(--border-color);
-      color: var(--text-dim);
-      font-size: 0.85rem;
-    }
+    footer { text-align: center; padding: 20px; border-top: 1px solid var(--border-color); color: var(--text-dim); font-size: 0.85rem; }
   </style>
 </head>
 <body>
 
   <header>
     <div class="logo" onclick="loadVideo('-VBc27cNC7A', 'NHẠC REMIX TIKTOK HAY NHẤT 2026')">
-      <span>▶</span> PH Tube
+      <span>▶</span> PH Tube No-Ads
     </div>
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Dán link YouTube hoặc nhập ID video/từ khóa...">
+      <input type="text" id="searchInput" placeholder="Dán link YouTube hoặc ID video...">
       <button onclick="handleSearch()">Xem ngay</button>
     </div>
   </header>
 
   <main>
+    <div class="server-switcher">
+      <span style="font-size:0.9rem; color:#bbb;">Nguồn phát không QC:</span>
+      <div>
+        <button class="server-btn active" id="btnServerPiped" onclick="switchServer('piped')">Server Clean (Piped)</button>
+        <button class="server-btn" id="btnServerYT" onclick="switchServer('youtube')">Server YouTube Gốc</button>
+      </div>
+    </div>
+
     <div class="player-section">
       <div class="video-container">
-        <iframe id="mainPlayer" src="https://www.youtube-nocookie.com/embed/-VBc27cNC7A?autoplay=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe id="mainPlayer" src="https://piped.video/embed/-VBc27cNC7A?autoplay=1" allow="accelerometer; autoplay; encrypted-media; gyroscope" allowfullscreen></iframe>
       </div>
       <div class="video-info">
         <div class="video-title" id="currentTitle">NHẠC REMIX TIKTOK HAY NHẤT 2026 | BXH NHẠC TRẺ REMIX HOT TREND 2026</div>
@@ -247,42 +122,25 @@
     </div>
 
     <div>
-      <div class="section-title">🎵 Nhạc Trend TikTok Việt Nam 2026 Hot Nhất</div>
+      <div class="section-title">🎵 Nhạc Trend TikTok Việt Nam 2026</div>
       <div class="video-grid" id="playlistGrid"></div>
     </div>
   </main>
 
   <footer>
-    PH Tube &copy; 2026 - Xem YouTube Nhúng Không Quảng Cáo
+    PH Tube &copy; 2026 - Giải Pháp Xem YouTube Không Quảng Cáo
   </footer>
 
   <script>
+    let currentVideoId = "-VBc27cNC7A";
+    let currentMode = "piped"; // 'piped' hoặc 'youtube'
+
     const tiktokPlaylist = [
-      {
-        id: "-VBc27cNC7A",
-        title: "NHẠC REMIX TIKTOK HAY NHẤT 2026 | BXH NHẠC TRẺ REMIX HOT TREND 2026",
-        channel: "DN TEAM"
-      },
-      {
-        id: "t4LbQLsw4bc",
-        title: "NHẠC REMIX TIKTOK TRIỆU VIEW - Top 20 Nhạc Hot TikTok 2026",
-        channel: "Ness Remix"
-      },
-      {
-        id: "EU9yrv9revU",
-        title: "BXH NHẠC TRẺ REMIX HOT TREND 2026 | NHẠC TREND TIKTOK",
-        channel: "DN TEAM"
-      },
-      {
-        id: "IZT7fDdDyR4",
-        title: "Nhạc Trẻ Ballad Hot Trend 2026 ♫ Top 20 Ca Khúc Hay Nhất",
-        channel: "Mộng Mơ Ballad"
-      },
-      {
-        id: "YQ8Ea1y8LB4",
-        title: "NHẠC REMIX TIKTOK HAY 2026🔥NONSTOP 2026 DJ THÁI HOÀNG REMIX",
-        channel: "Dolce Music"
-      }
+      { id: "-VBc27cNC7A", title: "NHẠC REMIX TIKTOK HAY NHẤT 2026 | BXH NHẠC TRẺ REMIX HOT TREND 2026", channel: "DN TEAM" },
+      { id: "t4LbQLsw4bc", title: "NHẠC REMIX TIKTOK TRIỆU VIEW - Top 20 Nhạc Hot TikTok 2026", channel: "Ness Remix" },
+      { id: "EU9yrv9revU", title: "BXH NHẠC TRẺ REMIX HOT TREND 2026 | NHẠC TREND TIKTOK", channel: "DN TEAM" },
+      { id: "IZT7fDdDyR4", title: "Nhạc Trẻ Ballad Hot Trend 2026 ♫ Top 20 Ca Khúc Hay Nhất", channel: "Mộng Mơ Ballad" },
+      { id: "YQ8Ea1y8LB4", title: "NHẠC REMIX TIKTOK HAY 2026🔥NONSTOP 2026 DJ THÁI HOÀNG REMIX", channel: "Dolce Music" }
     ];
 
     function renderPlaylist() {
@@ -305,10 +163,26 @@
       });
     }
 
-    function loadVideo(id, title) {
+    function updatePlayerSrc() {
       const player = document.getElementById("mainPlayer");
-      player.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
-      document.getElementById("currentTitle").innerText = title || "Video YouTube Không Quảng Cáo";
+      if (currentMode === "piped") {
+        player.src = `https://piped.video/embed/${currentVideoId}?autoplay=1`;
+      } else {
+        player.src = `https://www.youtube-nocookie.com/embed/${currentVideoId}?autoplay=1`;
+      }
+    }
+
+    function switchServer(mode) {
+      currentMode = mode;
+      document.getElementById("btnServerPiped").classList.toggle("active", mode === "piped");
+      document.getElementById("btnServerYT").classList.toggle("active", mode === "youtube");
+      updatePlayerSrc();
+    }
+
+    function loadVideo(id, title) {
+      currentVideoId = id;
+      updatePlayerSrc();
+      document.getElementById("currentTitle").innerText = title || "Video Đã Chọn";
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -323,16 +197,12 @@
       if (!input) return;
       const videoId = extractVideoId(input);
       if (videoId.length === 11) {
-        loadVideo(videoId, "Video YouTube Đã Chọn");
-      } else {
-        window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(input)}`, '_blank');
+        loadVideo(videoId, "Video YouTube");
       }
     }
 
-    document.getElementById("searchInput").addEventListener("keypress", function(e) {
-      if (e.key === "Enter") {
-        handleSearch();
-      }
+    document.getElementById("searchInput").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") handleSearch();
     });
 
     renderPlaylist();
